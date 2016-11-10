@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.finoux" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>KeyAccess</name>
+    <js-module name="KeyAccess" src="www/KeyAccess.js">
+        <clobbers target="cordova.plugins.KeyAccess" />
+    </js-module>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="KeyAccess">
+                <param name="ios-package" value="KeyAccess" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/KeyAccess.h" />
+        <source-file src="src/ios/KeyAccess.mm" />
+        <header-file src="src/ios/BDCryptor.h" />
+        <source-file src="src/ios/BDCryptor.m" />
+        <header-file src="src/ios/BDCryptorError.h" />
+        <source-file src="src/ios/BDCryptorError.m" />
+        <header-file src="src/ios/BDError.h" />
+        <source-file src="src/ios/BDError.m" />
+        <header-file src="src/ios/BDLog.h" />
+        <header-file src="src/ios/BDRSACryptor.h" />
+        <source-file src="src/ios/BDRSACryptor.m" />
+        <header-file src="src/ios/BDRSACryptorKeyPair.h" />
+        <source-file src="src/ios/BDRSACryptorKeyPair.m" />
+        <header-file src="src/ios/Keychain.h" />
+        <source-file src="src/ios/Keychain.m" />
+        <header-file src="src/ios/NSData+Base64.h" />
+        <source-file src="src/ios/NSData+Base64.m" />
+        <header-file src="src/ios/NSString+Base64.h" />
+        <source-file src="src/ios/NSString+Base64.m" />
+        <header-file src="src/ios/aes.h" />
+        <header-file src="src/ios/asn1.h" />
+        <header-file src="src/ios/asn1_mac.h" />
+        <header-file src="src/ios/asn1t.h" />
+        <header-file src="src/ios/bio.h" />
+        <header-file src="src/ios/blowfish.h" />
+        <header-file src="src/ios/bn.h" />
+        <header-file src="src/ios/buffer.h" />
+        <header-file src="src/ios/camellia.h" />
+        <header-file src="src/ios/cast.h" />
+        <header-file src="src/ios/cmac.h" />
+        <header-file src="src/ios/cms.h" />
+        <header-file src="src/ios/comp.h" />
+        <header-file src="src/ios/conf.h" />
+        <header-file src="src/ios/conf_api.h" />
+        <header-file src="src/ios/crypto.h" />
+        <header-file src="src/ios/des.h" />
+        <header-file src="src/ios/des_old.h" />
+        <header-file src="src/ios/ecdh.h" />
+        <header-file src="src/ios/ecdsa.h" />
+        <header-file src="src/ios/engine.h" />
+        <header-file src="src/ios/err.h" />
+        <header-file src="src/ios/evp.h" />
+        <header-file src="src/ios/hmac.h" />
+        <header-file src="src/ios/idea.h" />
+        <header-file src="src/ios/krb5_asn.h" />
+        <header-file src="src/ios/kssl.h" />
+        <header-file src="src/ios/lhash.h" />
+        <header-file src="src/ios/md4.h" />
+        <header-file src="src/ios/md5.h" />
+        <header-file src="src/ios/mdc2.h" />
+        <header-file src="src/ios/modes.h" />
+        <header-file src="src/ios/obj_mac.h" />
+        <header-file src="src/ios/objects.h" />
+        <header-file src="src/ios/ocsp.h" />
+        <header-file src="src/ios/opensslconf.h" />
+        <header-file src="src/ios/opensslv.h" />
+        <header-file src="src/ios/ossl_typ.h" />
+        <header-file src="src/ios/pem.h" />
+        <header-file src="src/ios/pem2.h" />
+        <header-file src="src/ios/pkcs12.h" />
+        <header-file src="src/ios/pkcs7.h" />
+        <header-file src="src/ios/pqueue.h" />
+        <header-file src="src/ios/rand.h" />
+        <header-file src="src/ios/rc2.h" />
+        <header-file src="src/ios/rc4.h" />
+        <header-file src="src/ios/ripemd.h" />
+        <header-file src="src/ios/rsa.h" />
+        <header-file src="src/ios/safestack.h" />
+        <header-file src="src/ios/seed.h" />
+        <header-file src="src/ios/sha.h" />
+        <header-file src="src/ios/srp.h" />
+        <header-file src="src/ios/srtp.h" />
+        <header-file src="src/ios/ssl.h" />
+        <header-file src="src/ios/ssl2.h" />
+        <header-file src="src/ios/ssl23.h" />
+        <header-file src="src/ios/ssl3.h" />
+        <header-file src="src/ios/stack.h" />
+        <header-file src="src/ios/symhacks.h" />
+        <header-file src="src/ios/tls1.h" />
+        <header-file src="src/ios/ts.h" />
+        <header-file src="src/ios/txt_db.h" />
+        <header-file src="src/ios/ui.h" />
+        <header-file src="src/ios/ui_compat.h" />
+        <header-file src="src/ios/whrlpool.h" />
+        <header-file src="src/ios/x509.h" />
+        <header-file src="src/ios/x509_vfy.h" />
+        <header-file src="src/ios/x509v3.h" />
+        <header-file src="src/ios/dh.h" />
+        <header-file src="src/ios/dsa.h" />
+        <header-file src="src/ios/dso.h" />
+        <header-file src="src/ios/dtls1.h" />
+        <header-file src="src/ios/e_os2.h" />
+        <header-file src="src/ios/ebcdic.h" />
+        <header-file src="src/ios/ec.h" />
+        <source-file framework="true" src="src/ios/libCrypto.a" />
+        <source-file src="src/ios/libssl.a" />
+    </platform>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="KeyAccess">
+                <param name="android-package" value="com.finoux.KeyAccess" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml">
+        </config-file>
+        <source-file src="src/android/KeyAccess.java" target-dir="src/com/finoux/KeyAccess" />
+        <source-file src="src/android/PNSignature.java" target-dir="src/com/finoux/KeyAccess" />
+    </platform>
+</plugin>
