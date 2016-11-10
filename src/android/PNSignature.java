@@ -207,9 +207,9 @@ public class PNSignature {
             e.printStackTrace();
         }
         String s=Base64.encodeToString(spec.getEncoded(), Base64.DEFAULT);
-        StringBuffer pub_buff=new StringBuffer("-----BEGIN PUBLIC KEY-----\\n");
+        StringBuffer pub_buff=new StringBuffer("-----BEGIN PUBLIC KEY-----\n");
         pub_buff.append(Base64.encodeToString(spec.getEncoded(), Base64.DEFAULT));
-        pub_buff.append("\\n-----END PUBLIC KEY-----");
+        pub_buff.append("\n-----END PUBLIC KEY-----");
         return pub_buff.toString();
         
     }
