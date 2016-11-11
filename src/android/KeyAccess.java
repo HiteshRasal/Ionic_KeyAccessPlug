@@ -22,8 +22,8 @@ import java.security.spec.InvalidKeySpecException;
  * This class echoes a string called from JavaScript.
  */
 public class KeyAccess extends CordovaPlugin {
-    String message;
-    
+     String message;
+
     @Override
     public boolean execute(String action, JSONArray args,CallbackContext callbackContext) throws JSONException {
         if (action.equals("getPublicKey")) {
@@ -31,9 +31,9 @@ public class KeyAccess extends CordovaPlugin {
             this.getPublicKey(message, callbackContext);
             return true;
         }
-        /*generateSig*/
+    
         else if (action.equals("geneSigning")) {
-            String value = args.getString(0);//uniquekey
+            String value = args.getString(0);
             try {
                 this.geneSigning(message,value, callbackContext);
             } catch (Exception e) {
@@ -107,11 +107,11 @@ public class KeyAccess extends CordovaPlugin {
         boolean confirm_delete = pnsig.deleteKey(delete_key, context);
         
         if (confirm_delete) {
-            callbackContext.success("Successfully key deleted");
+            callbackContext.success("delete success");
         } else {
             callbackContext.success("Fail to delete key");
         }
         
     }
-    
+
 }

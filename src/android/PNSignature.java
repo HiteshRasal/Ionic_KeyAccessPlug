@@ -2,13 +2,19 @@ package com.finoux;
 
 
 import android.annotation.TargetApi;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.security.KeyChain;
 import android.security.KeyPairGeneratorSpec;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
 import android.util.Log;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.math.BigInteger;
@@ -21,6 +27,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.Signature;
+import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -28,7 +35,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Enumeration;
+import javax.crypto.Cipher;
 import javax.security.auth.x500.X500Principal;
+import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
+import org.bouncycastle.util.io.pem.PemObject;
 
 
 public class PNSignature {
@@ -36,6 +46,7 @@ public class PNSignature {
     protected static final char SPLIT = '#';
     public static final String KEYPROVIDER = "RSA";
     public static final String KEYALGO = "SHA256withRSA";
+    public static final String SHARED_PREF = "pref";
     
     
     @TargetApi(Build.VERSION_CODES.M)
@@ -48,12 +59,11 @@ public class PNSignature {
         PrivateKey priv = null;
         String publickey_string = null;
         try {
-            
+
             int version = Build.VERSION.SDK_INT;
             
             pub = storeKeysIntoVault(version, kpg, alias, context);
-            publickey_string = savePublicKey(pub,"");
-            
+            publickey_string = toPEMString(pub);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,8 +101,8 @@ public class PNSignature {
                 Calendar start = Calendar.getInstance();
                 Calendar end = Calendar.getInstance();
                 end.add(Calendar.YEAR, 1);
-                
-                pkpg = KeyPairGenerator.getInstance(KEYPROVIDER, "AndroidKeyStore");
+    
+                pkpg = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore");
                 
                 KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(context)
                 .setAlias(alias)
@@ -151,14 +161,14 @@ public class PNSignature {
             int version = Build.VERSION.SDK_INT;
             ks = KeyStore.getInstance("AndroidKeyStore");
             ks.load(null);
-            
-            privateKey = (PrivateKey) ks.getKey(alias, null);
-            s = Signature.getInstance(KEYALGO);
-            s.initSign(privateKey);
-            s.update(uniqueKey.getBytes("UTF-8"));
-            signature = s.sign();
-            return signature;
-            
+
+                privateKey = (PrivateKey) ks.getKey(alias, null);
+                s = Signature.getInstance(KEYALGO);
+                s.initSign(privateKey);
+                s.update(uniqueKey.getBytes("UTF-8"));
+                signature = s.sign();
+                return signature;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,7 +181,7 @@ public class PNSignature {
     
     public boolean deleteKey(String alias, Context context) {
         int version = Build.VERSION.SDK_INT;
-        
+
         try {
             KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
             keyStore.load(null);
@@ -187,31 +197,33 @@ public class PNSignature {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+     
         return false;
     }
     //......................................................................................
-    
+
     /**
-     * @param publ
+     *
+     * @param publicKey
      * @return
+     * @throws IOException
      */
-    public static String savePublicKey(PublicKey publ, String save) {
-        X509EncodedKeySpec spec = null;
-        try {
-            KeyFactory fact = KeyFactory.getInstance(KEYPROVIDER);
-            spec = fact.getKeySpec(publ,
-                                   X509EncodedKeySpec.class);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String s=Base64.encodeToString(spec.getEncoded(), Base64.DEFAULT);
-        StringBuffer pub_buff=new StringBuffer("-----BEGIN PUBLIC KEY-----\n");
-        pub_buff.append(Base64.encodeToString(spec.getEncoded(), Base64.DEFAULT));
-        pub_buff.append("\n-----END PUBLIC KEY-----");
-        return pub_buff.toString();
+    public static String toPEMString(PublicKey publicKey) throws IOException {
         
+        
+        StringWriter sw = new StringWriter();
+        
+        
+        JcaPEMWriter pemWriter = new JcaPEMWriter(sw);
+        
+        
+        pemWriter.writeObject(publicKey);
+        
+        
+        pemWriter.close();
+        
+        
+        return sw.toString();
     }
     
 }

@@ -117,5 +117,7 @@
         </config-file>
         <source-file src="src/android/KeyAccess.java" target-dir="src/com/finoux/KeyAccess" />
         <source-file src="src/android/PNSignature.java" target-dir="src/com/finoux/KeyAccess" />
+        <source-file src="src/android/libs/bcprov-jdk15on-155.jar" target-dir="libs" framework="true"/>
+        <source-file src="src/android/libs/bcpkix-jdk15on-155.jar" target-dir="libs" framework="true"/>
     </platform>
 </plugin>
